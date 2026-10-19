@@ -37,6 +37,11 @@ h2 { font-size: 1.4rem; font-weight: 600; margin: 0 0 8px; }
 ul.res { list-style: none; margin: 0 0 40px; padding: 0; border-top: 1px solid var(--line); }
 ul.res li { padding: 12px 0; border-bottom: 1px solid var(--line); }
 ul.res .d { color: var(--muted); font-size: 0.95rem; }
+
+footer.site { background: #f8f8f8; margin-top: 48px; padding-block: 36px; }
+footer.site ul { list-style: none; margin: 0 auto; max-width: 1200px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 32px;
+  padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); }
+footer.site .plain, footer.site .plain a { color: var(--fg); }
 </style>
 </head>
 <body>
@@ -58,6 +63,17 @@ ul.res .d { color: var(--muted); font-size: 0.95rem; }
     </li>
   </ul>
 </div>
+
+<footer class="site">
+  <ul>
+    <li class="plain">Signals and Systems Fall 2026</li>
+    <li><a href="./">Home</a></li>
+    <li><a href="resources/">Resources</a></li>
+    <li><a href="policies/">Policies</a></li>
+    <li class="plain"><a href="https://forms.gle/2sg8SLNJtyRgFjEj9" target="_blank" rel="noopener">Attendance</a></li>
+    <li class="plain"><a href="#">Back to top</a></li>
+  </ul>
+</footer>
 
 </body>
 </html>
