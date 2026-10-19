@@ -57,6 +57,11 @@ td.res .chips, td.notes .chips { margin-top: 0; }
 .chip { background: var(--chip); border-radius: 4px; padding: 3px 10px; font-size: 0.95rem; }
 .chip.off { color: var(--ph); }
 .note { color: var(--muted); font-size: 0.88rem; margin-top: 6px; }
+
+footer.site { background: #f8f8f8; margin-top: 48px; padding-block: 36px; }
+footer.site ul { list-style: none; margin: 0 auto; max-width: 1200px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 32px;
+  padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); }
+footer.site .plain, footer.site .plain a { color: var(--fg); }
 </style>
 </head>
 <body>
@@ -84,6 +89,17 @@ td.res .chips, td.notes .chips { margin-top: 0; }
     </table>
   </div>
 </div>
+
+<footer class="site">
+  <ul>
+    <li class="plain">Signals and Systems Fall 2026</li>
+    <li><a href="./">Home</a></li>
+    <li><a href="resources/">Resources</a></li>
+    <li><a href="policies/">Policies</a></li>
+    <li class="plain"><a href="https://forms.gle/2sg8SLNJtyRgFjEj9" target="_blank" rel="noopener">Attendance</a></li>
+    <li class="plain"><a href="#">Back to top</a></li>
+  </ul>
+</footer>
 
 <script>
 (function () {
