@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Intro to Signals and Systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+/* Layout: plain course homepage modeled on eecs70.org; header block, then one schedule table */
+:root {
+  --bg: #ffffff;
+  --fg: #212529;
+  --muted: #5f6368;
+  --line: #dee2e6;
+  --link: #0d6efd;
+  --chip: #f1f4f8;
+  --ph: #9aa0a6;
+  --hl: #fff8e1;
+  --font: "Open Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15181c; --fg: #e6e8eb; --muted: #a3a9b1; --line: #33383f;
+    --link: #6ea8fe; --chip: #22272e; --ph: #7b828b; --hl: #2c2a1c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15181c; --fg: #e6e8eb; --muted: #a3a9b1; --line: #33383f;
+  --link: #6ea8fe; --chip: #22272e; --ph: #7b828b; --hl: #2c2a1c;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 16px; line-height: 1.5; }
+.wrap {
+  max-width: 1200px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; border-radius: 3px; }
+.ph { color: var(--ph); font-style: italic; }
+
+nav.top { display: flex; justify-content: flex-end; padding-block: 18px 0; }
+nav.top a { color: var(--muted); font-size: 1.15rem; }
+
+header { padding-block: 8px 28px; }
+h1 { font-size: clamp(1.8rem, 4.5vw, 2.6rem); font-weight: 400; margin: 0; line-height: 1.2; text-wrap: balance; }
+.sub { font-size: clamp(1.25rem, 3vw, 1.75rem); color: var(--muted); margin: 6px 0 0; }
+.staff { font-size: 1.3rem; margin: 10px 0 0; }
+.info { margin: 10px 0 0; font-size: 1.05rem; }
+.info p { margin: 2px 0; }
+.jump { display: inline-block; margin-top: 6px; font-weight: 700; font-size: 1.1rem; }
+
+.table-scroll { overflow-x: auto; margin-bottom: 40px; }
+table { width: 100%; border-collapse: collapse; min-width: 720px; }
+th, td { border: 1px solid var(--line); padding: 12px; text-align: left; vertical-align: top; }
+th { font-weight: 700; font-size: 1.05rem; }
+td.week { font-weight: 700; text-align: center; width: 60px; }
+td.date { white-space: nowrap; width: 80px; font-variant-numeric: tabular-nums; }
+td.lec { min-width: 260px; }
+tr.current td.date, tr.current td.lec, tr.current td.res, tr.current td.notes { background: var(--hl); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+td.res .chips, td.notes .chips { margin-top: 0; }
+.chip { background: var(--chip); border-radius: 4px; padding: 3px 10px; font-size: 0.95rem; }
+.chip.off { color: var(--ph); }
+.note { color: var(--muted); font-size: 0.88rem; margin-top: 6px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="top" aria-label="Site"><a href="#">Home</a></nav>
+
+  <header>
+    <h1>Intro to Signals and Systems</h1>
+    <p class="sub">Electronics &amp; Engineering Club at Berkeley City College, Fall 2026</p>
+    <p class="staff">Baron Kwong</p>
+    <div class="info">
+      <p>Lecture: Tu 1:30pm - 3:00pm, F 12:00pm - 1:30pm, <span class="ph">[Room TBA]</span></p>
+      <p>Zoom: <span class="ph">[Zoom link TBA]</span></p>
+    </div>
+    <a class="jump" id="jump" href="#week-1">Jump to current week</a>
+  </header>
+
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr><th>Week</th><th>Date</th><th>Lecture</th><th>Resources</th><th>Notes</th></tr>
+      </thead>
+      <tbody id="sched"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+(function () {
+  // 8 weeks, Tue + Fri, starting Tue Oct 27, 2026
+  var topics = ['1.1 Signals as data', '1.2 Operating on signals', '2.1 Measuring similarity', '2.2 Matching signals', '3.1 Matrices as machines', '3.2 Least squares', '4.1 Data fitting and validation', '4.2 Systems', '5.1 Convolution', '5.2 Sinusoids', '6.1 Frequency decomposition', '6.2 Spectrograms', '7.1 Frequency response and filters', '7.2 Audio fingerprinting', '8.1 Flex session', '8.2 Project showcase and next steps'];
+  var notes = { '2026-11-27': 'Day after Thanksgiving: confirming whether campus is open' };
+  var body = document.getElementById('sched');
+  var start = new Date(2026, 9, 27);
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  var currentWeek = 1;
+  var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  function key(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function chip(label) { var s = document.createElement('span'); s.className = 'chip off'; s.textContent = label; return s; }
+  function chips(labels) { var d = document.createElement('div'); d.className = 'chips'; labels.forEach(function (l) { d.appendChild(chip(l)); }); return d; }
+
+  var weeks = [];
+  for (var w = 0; w < 8; w++) {
+    var tue = new Date(start); tue.setDate(start.getDate() + w * 7);
+    var fri = new Date(tue); fri.setDate(tue.getDate() + 3);
+    weeks.push([tue, fri]);
+    var weekEnd = new Date(fri); weekEnd.setDate(fri.getDate() + 3); // through Monday
+    if (today >= tue || w === 0) { if (today > weekEnd && w < 7) currentWeek = w + 2; else if (today >= tue) currentWeek = w + 1; }
+  }
+  if (currentWeek > 8) currentWeek = 8;
+
+  var n = 0;
+  weeks.forEach(function (pair, w) {
+    pair.forEach(function (d, j) {
+      n++;
+      var tr = document.createElement('tr');
+      if (w + 1 === currentWeek) tr.className = 'current';
+      if (j === 0) {
+        tr.id = 'week-' + (w + 1);
+        var wk = document.createElement('td'); wk.className = 'week'; wk.rowSpan = 2; wk.textContent = w + 1;
+        tr.appendChild(wk);
+      }
+      var dt = document.createElement('td'); dt.className = 'date';
+      dt.innerHTML = days[d.getDay()] + '<br>' + (d.getMonth() + 1) + '/' + d.getDate();
+      var lec = document.createElement('td'); lec.className = 'lec';
+      var t = document.createElement('div'); t.textContent = topics[n - 1];
+      lec.appendChild(t);
+      lec.appendChild(chips(['lecture']));
+      var note = notes[key(d)];
+      if (note) { var nd = document.createElement('div'); nd.className = 'note'; nd.textContent = note; lec.appendChild(nd); }
+      var res = document.createElement('td'); res.className = 'res'; res.appendChild(chips(['handout', 'slides']));
+      var nt = document.createElement('td'); nt.className = 'notes'; nt.appendChild(chips(['notes']));
+      tr.append(dt, lec, res, nt);
+      body.appendChild(tr);
+    });
+  });
+
+  var jump = document.getElementById('jump');
+  jump.setAttribute('href', '#week-' + currentWeek);
+})();
+</script>
+</body>
+</html>
