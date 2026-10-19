@@ -18,19 +18,8 @@
   --chip: #f1f4f8;
   --ph: #9aa0a6;
   --hl: #fff8e1;
+  color-scheme: light;
   --font: "Open Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #15181c; --fg: #e6e8eb; --muted: #a3a9b1; --line: #33383f;
-    --link: #6ea8fe; --chip: #22272e; --ph: #7b828b; --hl: #2c2a1c;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #15181c; --fg: #e6e8eb; --muted: #a3a9b1; --line: #33383f;
-  --link: #6ea8fe; --chip: #22272e; --ph: #7b828b; --hl: #2c2a1c;
-  color-scheme: dark;
 }
 * { box-sizing: border-box; }
 body { background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 16px; line-height: 1.5; }
