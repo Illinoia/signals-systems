@@ -33,9 +33,18 @@ a:hover { text-decoration: underline; }
 a:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; border-radius: 3px; }
 .ph { color: var(--ph); font-style: italic; }
 
-nav.top { display: flex; justify-content: flex-end; gap: 24px; padding-block: 18px 0; }
-nav.top a { color: var(--muted); font-size: 1.15rem; }
-nav.top svg { width: 0.8em; height: 0.8em; margin-left: 4px; vertical-align: -1px; fill: currentColor; }
+nav.top { display: flex; flex-wrap: wrap; justify-content: flex-end; padding-block: 18px 0; }
+nav.top .links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px 24px; }
+nav.top a { color: var(--muted); font-size: 1.15rem; white-space: nowrap; }
+nav.top a svg { width: 0.8em; height: 0.8em; margin-left: 4px; vertical-align: -1px; fill: currentColor; }
+.menu-btn { display: none; }
+@media (max-width: 767px) {
+  .menu-btn { display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 44px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--muted); cursor: pointer; }
+  .menu-btn svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+  nav.top .links { display: none; flex-basis: 100%; flex-direction: column; gap: 0; padding-top: 8px; }
+  nav.top.open .links { display: flex; }
+  nav.top .links a { padding-block: 10px; }
+}
 
 header { padding-block: 8px 28px; }
 h1 { font-size: clamp(1.8rem, 4.5vw, 2.6rem); font-weight: 400; margin: 0; line-height: 1.2; text-wrap: balance; }
@@ -67,7 +76,14 @@ footer.site .plain, footer.site .plain a { color: var(--fg); }
 <body>
 
 <div class="wrap">
-  <nav class="top" aria-label="Site"><a href="#">Home</a><a href="resources/">Resources</a><a href="policies/">Policies</a><a href="https://forms.gle/2sg8SLNJtyRgFjEj9" target="_blank" rel="noopener">Attendance<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9 2h5v5h-1.5V4.6L7.1 10 6 8.9l5.4-5.4H9z"/><path d="M12.5 13.5h-10v-10H7V2H2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9h-1.5z"/></svg></a></nav>
+  <nav class="top" aria-label="Site"><button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button><div class="links" id="nav-links"><a href="#">Home</a><a href="resources/">Resources</a><a href="policies/">Policies</a><a href="https://forms.gle/2sg8SLNJtyRgFjEj9" target="_blank" rel="noopener">Attendance<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9 2h5v5h-1.5V4.6L7.1 10 6 8.9l5.4-5.4H9z"/><path d="M12.5 13.5h-10v-10H7V2H2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9h-1.5z"/></svg></a></div></nav>
+
+<script>
+  document.querySelector('.menu-btn').addEventListener('click', function () {
+    var open = this.parentElement.classList.toggle('open');
+    this.setAttribute('aria-expanded', open);
+  });
+</script>
 
   <header>
     <h1>Intro to Signals and Systems</h1>
