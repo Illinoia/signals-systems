@@ -123,14 +123,23 @@ footer.site .plain, footer.site .plain a { color: var(--fg); }
   // 8 weeks, Tue + Fri, starting Tue Oct 27, 2026
   var topics = ['1.1 Signals as data', '1.2 Operating on signals', '2.1 Measuring similarity', '2.2 Matching signals', '3.1 Matrices as machines', '3.2 Least squares', '4.1 Data fitting and validation', '4.2 Systems', '5.1 Convolution', '5.2 Sinusoids', '6.1 Frequency decomposition', '6.2 Spectrograms', '7.1 Frequency response and filters', '7.2 Audio fingerprinting', '8.1 Flex session', '8.2 Project showcase and next steps'];
   var notes = {};
+  var recordings = {
+    1: 'https://drive.google.com/file/d/1s1ye9y6bD-9JA2UwMdHvrlrUIQ29WhB0/view?usp=sharing'
+  };
   var body = document.getElementById('sched');
   var start = new Date(2026, 9, 27);
   var today = new Date(); today.setHours(0, 0, 0, 0);
   var currentWeek = 1;
   var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   function key(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
-  function chip(label) { var s = document.createElement('span'); s.className = 'chip off'; s.textContent = label; return s; }
-  function chips(labels) { var d = document.createElement('div'); d.className = 'chips'; labels.forEach(function (l) { d.appendChild(chip(l)); }); return d; }
+  function chip(label, url) {
+    var s = document.createElement(url ? 'a' : 'span');
+    s.className = url ? 'chip' : 'chip off';
+    s.textContent = label;
+    if (url) { s.href = url; s.target = '_blank'; s.rel = 'noopener'; }
+    return s;
+  }
+  function chips(labels, links) { links = links || {}; var d = document.createElement('div'); d.className = 'chips'; labels.forEach(function (l) { d.appendChild(chip(l, links[l])); }); return d; }
 
   var weeks = [];
   for (var w = 0; w < 8; w++) {
@@ -158,7 +167,7 @@ footer.site .plain, footer.site .plain a { color: var(--fg); }
       var lec = document.createElement('td'); lec.className = 'lec';
       var t = document.createElement('div'); t.textContent = topics[n - 1];
       lec.appendChild(t);
-      lec.appendChild(chips(['lecture']));
+      lec.appendChild(chips(['lecture'], { lecture: recordings[n] }));
       var note = notes[key(d)];
       if (note) { var nd = document.createElement('div'); nd.className = 'note'; nd.textContent = note; lec.appendChild(nd); }
       var res = document.createElement('td'); res.className = 'res'; res.appendChild(chips(['handout', 'slides']));
