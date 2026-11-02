@@ -131,6 +131,10 @@ footer.site .plain, footer.site .plain a { color: var(--fg); }
     1: 'https://drive.google.com/file/d/1T2a5Vpy_sjfib0QDXu1YAgPYlrIzVIrB/view?usp=sharing',
     2: 'https://drive.google.com/file/d/1rPgAhRqRvlHTPmhRIDM1pdrgqzSrjD5O/view?usp=sharing'
   };
+  var lectureNotes = {
+    1: ['Note 1', 'https://drive.google.com/file/d/1l4FmzXSZYcpqc0R21xiIiMnyhPnVIaYr/view?usp=sharing'],
+    2: ['Note 1', 'https://drive.google.com/file/d/1l4FmzXSZYcpqc0R21xiIiMnyhPnVIaYr/view?usp=sharing']
+  };
   var body = document.getElementById('sched');
   var start = new Date(2026, 9, 27);
   var today = new Date(); today.setHours(0, 0, 0, 0);
@@ -176,7 +180,7 @@ footer.site .plain, footer.site .plain a { color: var(--fg); }
       var note = notes[key(d)];
       if (note) { var nd = document.createElement('div'); nd.className = 'note'; nd.textContent = note; lec.appendChild(nd); }
       var res = document.createElement('td'); res.className = 'res'; res.appendChild(chips(['handout', 'slides'], { slides: slides[n] }));
-      var nt = document.createElement('td'); nt.className = 'notes'; nt.appendChild(chips(['notes']));
+      var nt = document.createElement('td'); nt.className = 'notes'; var ln = lectureNotes[n]; nt.appendChild(ln ? chips([ln[0]], { [ln[0]]: ln[1] }) : chips(['notes']));
       tr.append(dt, lec, res, nt);
       body.appendChild(tr);
     });
