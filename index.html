@@ -179,7 +179,7 @@ footer.site .plain, footer.site .plain a { color: var(--fg); }
       lec.appendChild(chips(['lecture'], { lecture: recordings[n] }));
       var note = notes[key(d)];
       if (note) { var nd = document.createElement('div'); nd.className = 'note'; nd.textContent = note; lec.appendChild(nd); }
-      var res = document.createElement('td'); res.className = 'res'; res.appendChild(chips(['handout', 'slides'], { slides: slides[n] }));
+      var res = document.createElement('td'); res.className = 'res'; res.appendChild(chips(['slides'], { slides: slides[n] }));
       var nt = document.createElement('td'); nt.className = 'notes'; var ln = lectureNotes[n]; nt.appendChild(ln ? chips([ln[0]], { [ln[0]]: ln[1] }) : chips(['notes']));
       tr.append(dt, lec, res, nt);
       body.appendChild(tr);
